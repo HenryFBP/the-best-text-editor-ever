@@ -15,7 +15,6 @@ public class TextBuffer {
      * What is each line separated by?
      */
     public CharSequence delimiter = "\n";
-
     /**
      * The lines.
      */
@@ -30,6 +29,11 @@ public class TextBuffer {
         }
     }
 
+    public TextBuffer setDelimiter(CharSequence delimiter) {
+        this.delimiter = delimiter;
+        return this;
+    }
+
     /***
      * Save this TextBuffer to a file.
      * @param path Where to save it?
@@ -41,7 +45,7 @@ public class TextBuffer {
     /**
      * Adds zero or more lines to this TextBuffer.
      *
-     * @param lines A line.
+     * @param lines Zero or more lines.
      * @return The TextBuffer.
      */
     public TextBuffer add(CharSequence... lines) {
@@ -58,7 +62,7 @@ public class TextBuffer {
         for (int i = 0; i < lines.size(); i++) {
 
             CharSequence line = this.lines.get(i);
-            sb.append(line);
+            sb.append(line.toString());
 
             if (i < (lines.size() - 1)) { // Avoid dangling newline.
                 sb.append(delimiter);

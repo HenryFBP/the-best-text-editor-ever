@@ -7,39 +7,23 @@ class TextBufferTest {
 
     @Test
     fun testTextBufferEmpty() {
-
-        var textBuffer = TextBuffer()
-
-        Assert.assertEquals("", textBuffer.toString())
+        Assert.assertEquals("", TextBuffer().toString())
+        Assert.assertEquals("x", TextBuffer("x").toString())
     }
 
     @Test
     fun testTextBufferEmptyLine() {
-        var textBuffer = TextBuffer()
-
-        textBuffer.add("", "")
-
-        Assert.assertEquals("\n", textBuffer.toString())
+        Assert.assertEquals("x\ny", TextBuffer("x", "y").toString())
     }
 
     @Test
     fun testTextBufferSimple() {
-
-        var textBuffer = TextBuffer()
-
-        textBuffer.add("hello!")
-        textBuffer.add("")
-
-        Assert.assertEquals("hello!\n", textBuffer.toString())
+        Assert.assertEquals("hello!\n", TextBuffer("hello!", "").toString())
     }
 
     @Test
     fun testTextBufferDelimiters() {
-        var textBuffer = TextBuffer("1", "2", "30")
-
-        textBuffer.delimiter = "x"
-
-        Assert.assertEquals("1x2x30", textBuffer.toString())
+        Assert.assertEquals("1x2x30", TextBuffer("1", "2", "30").setDelimiter("x").toString())
     }
 
 }
