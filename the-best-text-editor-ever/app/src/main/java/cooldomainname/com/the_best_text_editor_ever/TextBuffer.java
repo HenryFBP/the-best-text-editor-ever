@@ -15,6 +15,7 @@ public class TextBuffer {
      * What is each line separated by?
      */
     public CharSequence delimiter = "\n";
+
     /**
      * The lines.
      */
@@ -29,17 +30,30 @@ public class TextBuffer {
         }
     }
 
-    public TextBuffer setDelimiter(CharSequence delimiter) {
-        this.delimiter = delimiter;
-        return this;
+    /***
+     * Get a TextBuffer from a file.
+     * @param path The file.
+     * @return a TextBuffer.
+     */
+    public static TextBuffer fromFile(Path path) {
+        TextBuffer textBuffer = new TextBuffer();
+
+        textBuffer.add("Not implemented.");
+
+        return textBuffer;
     }
 
     /***
      * Save this TextBuffer to a file.
      * @param path Where to save it?
      */
-    public void save(Path path) {
+    public static void save(TextBuffer textBuffer, Path path) {
         throw new NotImplementedError("Not implemented.");
+    }
+
+    public TextBuffer setDelimiter(CharSequence delimiter) {
+        this.delimiter = delimiter;
+        return this;
     }
 
     /**
