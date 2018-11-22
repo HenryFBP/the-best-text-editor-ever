@@ -15,6 +15,11 @@ import java.util.List;
 
 public class TextEditActivity extends AppCompatActivity {
 
+    /***
+     * The TextBuffer that stores our text.
+     */
+    private TextBuffer textBuffer;
+
     /**
      * Actions you can perform on a file.
      */
@@ -34,6 +39,15 @@ public class TextEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_edit);
 
+        // If we have a TextBuffer left over, use it.
+        if (savedInstanceState != null) {
+
+            if (savedInstanceState.get("TextBuffer") != null) {
+                this.textBuffer = (TextBuffer) savedInstanceState.get("TextBuffer");
+            }
+
+        }
+
         Spinner spinnerFileActions = findViewById(R.id.spinnerFileActions);
         ArrayAdapter<String> adapterFileActions = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listFileActions);
         adapterFileActions.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -47,7 +61,25 @@ public class TextEditActivity extends AppCompatActivity {
         spinnerFileActions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), String.format("Your file action selection is '%s'.", parent.getItemAtPosition(position).toString()), Toast.LENGTH_SHORT).show();
+
+                String selection = ((String) parent.getItemAtPosition(position));
+
+                Toast.makeText(getApplicationContext(), String.format("Your file action selection is '%s'.", selection), Toast.LENGTH_SHORT).show();
+
+
+                switch (selection.toLowerCase()) {
+                    case "save": {
+                        break;
+                    }
+
+                    case "rename": {
+                        break;
+                    }
+
+                    default: {
+                        break;
+                    }
+                }
             }
 
             @Override
@@ -60,7 +92,24 @@ public class TextEditActivity extends AppCompatActivity {
         spinnerTextActions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), String.format("Your text editing selection is '%s'.", parent.getItemAtPosition(position).toString()), Toast.LENGTH_SHORT).show();
+                String selection = ((String) parent.getItemAtPosition(position));
+
+                Toast.makeText(getApplicationContext(), String.format("Your text editing selection is '%s'.", selection), Toast.LENGTH_SHORT).show();
+
+                switch (selection.toLowerCase()) {
+                    case "cut": {
+                        break;
+                    }
+                    case "select": {
+                        break;
+                    }
+                    case "move": {
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
+                }
             }
 
             @Override
