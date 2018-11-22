@@ -1,7 +1,9 @@
 package cooldomainname.com.the_best_text_editor_ever;
 
-import kotlin.NotImplementedError;
-
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,10 +47,24 @@ public class TextBuffer {
 
     /***
      * Save this TextBuffer to a file.
-     * @param path Where to save it?
+     * @param file What file to saveTo it to?
      */
-    public static void save(TextBuffer textBuffer, Path path) {
-        throw new NotImplementedError("Not implemented.");
+    public void saveTo(File file) throws IOException {
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+
+        for (int i = 0; i < this.lines.size(); i++) {
+
+            CharSequence charSequence = this.lines.get(i);
+
+            writer.write(String.valueOf(charSequence));
+
+            if (i < this.lines.size() - 1) {
+                writer.write(String.valueOf(this.delimiter));
+            }
+        }
+
+        writer.close();
     }
 
     public TextBuffer setDelimiter(CharSequence delimiter) {
