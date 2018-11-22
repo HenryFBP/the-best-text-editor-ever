@@ -1,12 +1,9 @@
 package cooldomainname.com.the_best_text_editor_ever;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Path;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * A buffer of text.
@@ -16,7 +13,7 @@ public class TextBuffer {
     /**
      * What is each line separated by?
      */
-    public CharSequence delimiter = "\n";
+    private CharSequence delimiter = System.getProperty("line.separator");
 
     /**
      * The lines.
@@ -32,17 +29,51 @@ public class TextBuffer {
         }
     }
 
+    public TextBuffer(List<String> lines) {
+        for (CharSequence line : lines) {
+            this.add(line);
+        }
+    }
+
+
     /***
      * Get a TextBuffer from a file.
-     * @param path The file.
+     * Uses the system's newline (i.e. '\n' or "\r\n")
+     * @param file The file.
      * @return a TextBuffer.
      */
-    public static TextBuffer fromFile(Path path) {
-        TextBuffer textBuffer = new TextBuffer();
+    public static TextBuffer fromFile(File file) throws IOException {
+        return fromFile(file, System.getProperty("line.separator"));
+    }
 
-        textBuffer.add("Not implemented.");
+    /***
+     * Get a TextBuffer from a file.
+     * @param file The file.
+     * @param delimiter The delimiter to indicate a new line.
+     * @return a TextBuffer.
+     */
+    public static TextBuffer fromFile(File file, CharSequence delimiter) throws IOException {
 
-        return textBuffer;
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+
+        StringBuilder builder = new StringBuilder();
+
+        // Read all characters until file is empty.
+        //
+        // The reason we do this instead of reader.readLine() is to capture '\n' and "\r\n".
+        //
+        // The reader.readLine() will normally discard those sequences.
+        while (reader.ready()) {
+            builder.append(((char) reader.read()));
+        }
+
+        // Split the string by the delimiter.
+        //
+        // We use a limit of -1 here to force a delimiter at the end of the string to yield an empty string.
+        List<String> lines = Arrays.asList(builder.toString().split((String) delimiter, -1));
+
+        // Create a TextBuffer from the lines, and set its delimiter.
+        return new TextBuffer(lines).setDelimiter(delimiter);
     }
 
     /***
@@ -83,6 +114,10 @@ public class TextBuffer {
         this.lines.addAll(Arrays.asList(lines));
 
         return this;
+    }
+
+    public CharSequence getLine(int location) {
+        return this.lines.get(location);
     }
 
     @Override

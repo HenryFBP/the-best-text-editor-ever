@@ -5,7 +5,9 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.BufferedReader
+import java.io.BufferedWriter
 import java.io.FileReader
+import java.io.FileWriter
 
 
 class TextBufferTest : TestCase() {
@@ -25,12 +27,12 @@ class TextBufferTest : TestCase() {
 
     @Test
     fun testTextBufferEmptyLine() {
-        Assert.assertEquals("x\ny", TextBuffer("x", "y").toString())
+        Assert.assertEquals(String.format("x%ny"), TextBuffer("x", "y").toString())
     }
 
     @Test
     fun testTextBufferSimple() {
-        Assert.assertEquals("hello!\n", TextBuffer("hello!", "").toString())
+        Assert.assertEquals(String.format("hello!%n"), TextBuffer("hello!", "").toString())
     }
 
     @Test
@@ -80,4 +82,41 @@ class TextBufferTest : TestCase() {
         Assert.assertTrue(file.exists())
     }
 
+    /**
+     * Make sure that we can open a file and read back data from it.
+     *
+     * Tests a variety of delimiters.
+     */
+    fun testTextBufferReadingFile() {
+
+        var funDelims = listOf<CharSequence>("x", "\n", "\r\n", "\r", "ASDF")
+
+        for (i in 0 until funDelims.size) {
+
+            var delim = funDelims[i]
+
+            var file = folder.newFile("tempFile-${i}.txt")
+
+            var writer = BufferedWriter(FileWriter(file))
+
+            writer.write("Hello!\nI like edge cases!\nDon't you?\n\n...Well?\n".replace("\n", delim.toString()))
+
+            writer.close()
+
+            var textBuffer: TextBuffer = TextBuffer.fromFile(file, delim)
+
+            assertEquals("Hello!", textBuffer.getLine(0))
+            assertEquals("I like edge cases!", textBuffer.getLine(1))
+            assertEquals("Don't you?", textBuffer.getLine(2))
+            assertEquals("", textBuffer.getLine(3))
+            assertEquals("...Well?", textBuffer.getLine(4))
+            assertEquals("", textBuffer.getLine(5))
+
+            try {
+                textBuffer.getLine(6)
+                throw AssertionError("We shouldn't be able to go this far.")
+            } catch (e: IndexOutOfBoundsException) {
+            }
+        }
+    }
 }
