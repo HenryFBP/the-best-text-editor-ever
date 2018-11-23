@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.Arrays;
@@ -60,11 +59,10 @@ public class TextEditActivity extends AppCompatActivity implements SaveFileDialo
         }
 
         // Spinner for actions that can be performed on a file.
-        final Spinner spinnerFileActions = findViewById(R.id.spinnerFileActions);
+        final BetterSpinner spinnerFileActions = findViewById(R.id.spinnerFileActions);
         ArrayAdapter<String> adapterFileActions = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listFileActions);
         adapterFileActions.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerFileActions.setAdapter(adapterFileActions);
-        final boolean[] spinnerFileActionsSelected = {false}; //TODO move these to the class level.
 
         spinnerFileActions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -72,7 +70,7 @@ public class TextEditActivity extends AppCompatActivity implements SaveFileDialo
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 //Prevents initialization from triggering this {@link ArrayAdapter.onItemSelected} event.
-                if (spinnerFileActionsSelected[0]) {
+                if (spinnerFileActions.initialized) {
 
                     String selection = ((String) parent.getItemAtPosition(position));
 
@@ -93,7 +91,7 @@ public class TextEditActivity extends AppCompatActivity implements SaveFileDialo
                         }
                     }
                 } else {
-                    spinnerFileActionsSelected[0] = true;
+                    spinnerFileActions.initialized = true;
                 }
             }
 
@@ -102,14 +100,12 @@ public class TextEditActivity extends AppCompatActivity implements SaveFileDialo
                 // TODO Auto-generated method stub
             }
         });
-        spinnerFileActions.setSelection(-1);
 
         // Spinner for actions that can be performed on text.
-        Spinner spinnerTextActions = findViewById(R.id.spinnerTextActions);
+        final BetterSpinner spinnerTextActions = findViewById(R.id.spinnerTextActions);
         ArrayAdapter<String> adapterTextActions = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listTextActions);
         adapterTextActions.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTextActions.setAdapter(adapterTextActions);
-        final boolean[] spinnerTextActionsSelected = {false};
 
         spinnerTextActions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -117,7 +113,7 @@ public class TextEditActivity extends AppCompatActivity implements SaveFileDialo
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 //Prevents initialization from triggering this {@link ArrayAdapter.onItemSelected} event.
-                if (spinnerTextActionsSelected[0]) {
+                if (spinnerTextActions.initialized) {
                     String selection = ((String) parent.getItemAtPosition(position));
 
                     Toast.makeText(getApplicationContext(), String.format("Your text editing selection is '%s'.", selection), Toast.LENGTH_SHORT).show();
@@ -137,7 +133,7 @@ public class TextEditActivity extends AppCompatActivity implements SaveFileDialo
                         }
                     }
                 } else {
-                    spinnerTextActionsSelected[0] = true;
+                    spinnerTextActions.initialized = true;
                 }
             }
 
@@ -146,7 +142,6 @@ public class TextEditActivity extends AppCompatActivity implements SaveFileDialo
                 // TODO Auto-generated method stub
             }
         });
-        spinnerTextActions.setSelection(-1);
 
     }
 
