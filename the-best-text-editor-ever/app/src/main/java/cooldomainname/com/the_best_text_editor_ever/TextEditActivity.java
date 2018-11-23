@@ -3,6 +3,7 @@ package cooldomainname.com.the_best_text_editor_ever;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,7 +35,9 @@ public class TextEditActivity extends AppCompatActivity {
      * We want to save the contents of our {@link TextEditActivity#textBuffer} to a file.
      */
     private void saveFile() {
-        //TODO do it!
+        FragmentManager fm = getSupportFragmentManager();
+        SaveFileDialogFragment saveFileDialogFragment = SaveFileDialogFragment.newInstance("Some Title");
+        saveFileDialogFragment.show(fm, "fragment_save_file");
     }
 
     /**
