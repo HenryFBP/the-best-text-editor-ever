@@ -14,7 +14,7 @@ import android.widget.Toast;
 import java.util.Arrays;
 import java.util.List;
 
-public class TextEditActivity extends AppCompatActivity {
+public class TextEditActivity extends AppCompatActivity implements SaveFileDialogFragment.SaveFileDialogListener {
 
     /***
      * The TextBuffer that stores our text.
@@ -36,8 +36,10 @@ public class TextEditActivity extends AppCompatActivity {
      */
     private void saveFile() {
         FragmentManager fm = getSupportFragmentManager();
-        SaveFileDialogFragment saveFileDialogFragment = SaveFileDialogFragment.newInstance("Some Title");
-        saveFileDialogFragment.show(fm, "fragment_save_file");
+
+        SaveFileDialogFragment saveFileDialogFragment = new SaveFileDialogFragment();
+
+        saveFileDialogFragment.show(fm, "title");
     }
 
     /**
@@ -149,4 +151,14 @@ public class TextEditActivity extends AppCompatActivity {
     }
 
 
+    /***
+     * When the user wishes to save the file.
+     * @param inputText The text that was input.
+     */
+    // 3. This method is invoked in the activity when the listener is triggered
+    // Access the data result passed to the activity here
+    @Override
+    public void onFinishEditDialog(String inputText) {
+        Toast.makeText(this, String.format("We should save the file to '%s'.", inputText), Toast.LENGTH_SHORT).show();
+    }
 }
