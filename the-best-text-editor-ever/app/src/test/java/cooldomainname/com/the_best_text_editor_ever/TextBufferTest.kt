@@ -9,7 +9,6 @@ import java.io.BufferedWriter
 import java.io.FileReader
 import java.io.FileWriter
 
-
 class TextBufferTest : TestCase() {
 
 
@@ -66,6 +65,7 @@ class TextBufferTest : TestCase() {
      * Make sure that we can save a file and read data back from it,
      * even if it is saved with a wacky delimiter like " :) ".
      */
+    @Test
     fun testTextBufferSavingFileWackyDelims() {
         var textBuffer = TextBuffer("I like wacky delims.", "So do I!").setDelimiter(" :) ")
 
@@ -87,6 +87,7 @@ class TextBufferTest : TestCase() {
      *
      * Tests a variety of delimiters.
      */
+    @Test
     fun testTextBufferReadingFile() {
 
         var funDelims = listOf<CharSequence>("x", "\n", "\r\n", "\r", "ASDF")
