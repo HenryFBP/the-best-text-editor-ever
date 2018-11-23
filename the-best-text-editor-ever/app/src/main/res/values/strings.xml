@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">the-best-text-editor-ever</string>
+    <string name="defaultEditorText">Hello! I\'m text!</string>
+    <string name="editTextHint">The text editor\'s content.</string>
 </resources>
