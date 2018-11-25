@@ -8,8 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,9 +34,9 @@ public class TextEditActivity extends AppCompatActivity implements SaveFileDialo
     private List<String> listTextActions = Arrays.asList("", "cut", "select", "move");
 
     /**
-     * We want to save the contents of our {@link TextEditActivity#textBuffer} to a file.
+     * We want to open the 'save file' dialog.
      */
-    private void saveFile() {
+    private void openSaveFileDialog() {
         FragmentManager fm = getSupportFragmentManager();
 
         SaveFileDialogFragment saveFileDialogFragment = new SaveFileDialogFragment();
@@ -78,7 +81,7 @@ public class TextEditActivity extends AppCompatActivity implements SaveFileDialo
 
                     switch (selection.toLowerCase()) {
                         case "save": {
-                            saveFile();
+                            openSaveFileDialog();
                             break;
                         }
 
@@ -155,5 +158,15 @@ public class TextEditActivity extends AppCompatActivity implements SaveFileDialo
     @Override
     public void onFinishEditDialog(String inputText) {
         Toast.makeText(this, String.format("We should save the file to '%s'.", inputText), Toast.LENGTH_SHORT).show();
+
+        File file = new File(getApplicationContext().getFilesDir(), inputText);
+
+        TextBuffer textBuffer = TextBuffer.fromTextEdit((EditText) findViewById(R.id.editTextEditor));
+
+        try {
+            textBuffer.saveTo(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

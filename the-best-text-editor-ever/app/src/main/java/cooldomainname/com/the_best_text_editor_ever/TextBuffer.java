@@ -1,5 +1,7 @@
 package cooldomainname.com.the_best_text_editor_ever;
 
+import android.widget.EditText;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +37,25 @@ public class TextBuffer {
         }
     }
 
+    /***
+     * Given an {@link EditText} element, return a TextBuffer from it.
+     */
+    public static TextBuffer fromTextEdit(EditText editText) {
+        return fromDelimitedString(editText.toString(), System.getProperty("line.separator"));
+    }
+
+    /***
+     * Given a string demarcated with delimiters, generate a {@link TextBuffer} from it.
+     */
+    public static TextBuffer fromDelimitedString(CharSequence string, CharSequence delimiter) {
+        // Split the string by the delimiter.
+        //
+        // We use a limit of -1 here to force a delimiter at the end of the string to yield an empty string.
+        List<String> lines = Arrays.asList(string.toString().split((String) delimiter, -1));
+
+        return new TextBuffer(lines);
+    }
+
 
     /***
      * Get a TextBuffer from a file.
@@ -67,13 +88,8 @@ public class TextBuffer {
             builder.append(((char) reader.read()));
         }
 
-        // Split the string by the delimiter.
-        //
-        // We use a limit of -1 here to force a delimiter at the end of the string to yield an empty string.
-        List<String> lines = Arrays.asList(builder.toString().split((String) delimiter, -1));
-
         // Create a TextBuffer from the lines, and set its delimiter.
-        return new TextBuffer(lines).setDelimiter(delimiter);
+        return fromDelimitedString(builder.toString(), delimiter).setDelimiter(delimiter);
     }
 
     /***
