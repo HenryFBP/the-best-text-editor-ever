@@ -104,13 +104,18 @@ public class TextBuffer {
      *
      * It does not erase existing text, but simply appends it.
      */
-    public void populateEditText(EditText editText) {
+    public TextBuffer populateEditText(EditText editText) {
 
         for (int i = 0; i < this.lines.size(); i++) {
             CharSequence charSequence = this.lines.get(i);
             editText.append(charSequence);
 
+            if (i < this.lines.size() - 1) { //Add a delimiter
+                editText.append(this.delimiter);
+            }
         }
+
+        return this;
     }
 
     /***

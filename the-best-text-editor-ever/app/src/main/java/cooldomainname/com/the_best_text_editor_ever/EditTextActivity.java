@@ -213,7 +213,36 @@ public class EditTextActivity extends AppCompatActivity implements OpenFileDialo
      */
     @Override
     public void onFinishEditOpenDialog(String inputText) {
-        toastLong("Opening files not yet implemented", getApplicationContext());
+
+        File dir = getApplicationContext().getFilesDir();
+
+        File file = new File(dir, inputText);
+
+        // File doesn't exist.
+        if (!file.exists()) {
+            toastLong(String.format(
+                    "File called '%s' does not exist at: \n" +
+                            "'%s'.",
+                    inputText, dir), getApplicationContext());
+
+            return;
+        }
+
+        try {
+            // Get a TextBuffer from our file.
+            textBuffer = TextBuffer.fromFile(file);
+
+            // Empty out our EditText.
+            editText.setText("");
+
+            // Populate our EditText with its contents.
+            textBuffer.populateEditText(editText);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            toastLong("Couldn't open file.", getApplicationContext());
+        }
+
     }
 
 
