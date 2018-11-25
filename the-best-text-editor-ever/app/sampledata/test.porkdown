@@ -1,0 +1,5 @@
+This is a new file format called 'porkdown' made by me.
+
+Whenever you see the word PORK, it should be highlighted in...an ugly color.
+
+All other syntax other than PORK should be ignored.

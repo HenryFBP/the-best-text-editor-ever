@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,6 +17,7 @@ import cooldomainname.com.the_best_text_editor_ever.SaveFileDialogFragment.SaveF
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import static cooldomainname.com.the_best_text_editor_ever.Library.toastLong;
@@ -38,6 +40,16 @@ public class EditTextActivity extends AppCompatActivity implements OpenFileDialo
     private List<String> listTextActions = Arrays.asList("", "cut", "select", "move");
 
     private EditText editText;
+
+    /***
+     * A listing of TextWatchers that can handle specific extensions.
+     *
+     * It maps file extensions to classes that can highlight EditText elements.
+     */
+    private HashMap<String, Class<? extends TextWatcher>> extensionTextWatcherMap =
+            new HashMap<String, Class<? extends TextWatcher>>() {{
+                put("porkdown", TextWatcherPorkdown.class);
+            }};
 
     /**
      * We want to open the 'save file' dialog.
@@ -207,6 +219,23 @@ public class EditTextActivity extends AppCompatActivity implements OpenFileDialo
         }
     }
 
+    /**
+     * Setup syntax highlighting for an {@link EditText} given a filename and a {@link HashMap} containing
+     * filename <-> {@link HashMap} mapping.
+     *
+     * @param extension A file extension.
+     * @param editText  The {@link EditText} to apply the {@link TextWatcher} to.
+     * @param hashMap   The mapping of file extensions to {@link TextWatcher}s.
+     */
+    public void setupSyntaxHighlighter(String extension, EditText editText, HashMap<String, Class<? extends TextWatcher>> hashMap) {
+        try {
+            editText.addTextChangedListener(hashMap.get(extension).newInstance());
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * The user wishes to open a file.
@@ -216,7 +245,7 @@ public class EditTextActivity extends AppCompatActivity implements OpenFileDialo
 
         File dir = getApplicationContext().getFilesDir();
 
-        File file = new File(dir, inputText);
+        BetterFile file = new BetterFile(dir, inputText);
 
         // File doesn't exist.
         if (!file.exists()) {
@@ -234,6 +263,16 @@ public class EditTextActivity extends AppCompatActivity implements OpenFileDialo
 
             // Empty out our EditText.
             editText.setText("");
+
+            // Set up syntax highlighting, if we can.
+            String extension = file.extension();
+
+            // If we know how to highlight this file,
+            if (extensionTextWatcherMap.containsKey(extension)) {
+                // Try to do it!
+                toastLong(String.format("'%s' language detected!", extension), getApplicationContext());
+                setupSyntaxHighlighter(extension, editText, extensionTextWatcherMap);
+            }
 
             // Populate our EditText with its contents.
             textBuffer.populateEditText(editText);
