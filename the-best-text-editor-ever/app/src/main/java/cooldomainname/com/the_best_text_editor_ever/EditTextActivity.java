@@ -11,6 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
+import cooldomainname.com.the_best_text_editor_ever.OpenFileDialogFragment.OpenFileDialogListener;
+import cooldomainname.com.the_best_text_editor_ever.SaveFileDialogFragment.SaveFileDialogListener;
 
 import java.io.*;
 import java.util.Arrays;
@@ -18,7 +20,7 @@ import java.util.List;
 
 import static cooldomainname.com.the_best_text_editor_ever.Library.toastLong;
 
-public class TextEditActivity extends AppCompatActivity implements SaveFileDialogFragment.SaveFileDialogListener {
+public class EditTextActivity extends AppCompatActivity implements OpenFileDialogListener, SaveFileDialogListener {
 
     /***
      * The TextBuffer that stores our text.
@@ -28,7 +30,7 @@ public class TextEditActivity extends AppCompatActivity implements SaveFileDialo
     /**
      * Actions you can perform on a file.
      */
-    private List<String> listFileActions = Arrays.asList("", "save", "rename", "run tests");
+    private List<String> listFileActions = Arrays.asList("", "open", "save", "rename", "run tests");
 
     /**
      * Actions you can perform on text.
@@ -46,6 +48,17 @@ public class TextEditActivity extends AppCompatActivity implements SaveFileDialo
         SaveFileDialogFragment saveFileDialogFragment = new SaveFileDialogFragment();
 
         saveFileDialogFragment.show(fm, "title");
+    }
+
+    /**
+     * We want to open the 'open file' dialog.
+     */
+    private void openOpenFileDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+
+        OpenFileDialogFragment openFileDialogFragment = new OpenFileDialogFragment();
+
+        openFileDialogFragment.show(fm, "title");
     }
 
     /**
@@ -87,6 +100,12 @@ public class TextEditActivity extends AppCompatActivity implements SaveFileDialo
                     Toast.makeText(getApplicationContext(), String.format("Your file action selection is '%s'.", selection), Toast.LENGTH_SHORT).show();
 
                     switch (selection.toLowerCase()) {
+
+                        case "open": {
+                            openOpenFileDialog();
+                            break;
+                        }
+
                         case "save": {
                             openSaveFileDialog();
                             break;
@@ -168,7 +187,7 @@ public class TextEditActivity extends AppCompatActivity implements SaveFileDialo
     // 3. This method is invoked in the activity when the listener is triggered
     // Access the data result passed to the activity here
     @Override
-    public void onFinishEditDialog(String inputText) {
+    public void onFinishEditSaveDialog(String inputText) {
 //        toastLong(String.format("We should save the file to '%s'.", inputText), getApplicationContext());
 
         File file = new File(getApplicationContext().getFilesDir(), inputText);
@@ -187,6 +206,45 @@ public class TextEditActivity extends AppCompatActivity implements SaveFileDialo
             toastLong("Couldn't save file.", getApplicationContext());
         }
     }
+
+
+    /**
+     * The user wishes to open a file.
+     */
+    @Override
+    public void onFinishEditOpenDialog(String inputText) {
+
+        File dir = getApplicationContext().getFilesDir();
+
+        File file = new File(dir, inputText);
+
+        // File doesn't exist.
+        if (!file.exists()) {
+            toastLong(String.format(
+                    "File called '%s' does not exist at: \n" +
+                            "'%s'.",
+                    inputText, dir), getApplicationContext());
+
+            return;
+        }
+
+        try {
+            // Get a TextBuffer from our file.
+            textBuffer = TextBuffer.fromFile(file);
+
+            // Empty out our EditText.
+            editText.setText("");
+
+            // Populate our EditText with its contents.
+            textBuffer.populateEditText(editText);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            toastLong("Couldn't open file.", getApplicationContext());
+        }
+
+    }
+
 
     /***
      * Test that we can save a file to disk given an {@link EditText} object with text.
