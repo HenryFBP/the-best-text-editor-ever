@@ -40,8 +40,15 @@ public class TextBuffer {
     /***
      * Given an {@link EditText} element, return a TextBuffer from it.
      */
-    public static TextBuffer fromTextEdit(EditText editText) {
-        return fromDelimitedString(editText.toString(), System.getProperty("line.separator"));
+    public static TextBuffer fromEditText(EditText editText) {
+        return fromEditText(editText, System.getProperty("line.separator"));
+    }
+
+    /***
+     * Given an {@link EditText} element and a delimiter, return a TextBuffer from it.
+     */
+    public static TextBuffer fromEditText(EditText editText, CharSequence delimiter) {
+        return fromDelimitedString(editText.getText().toString(), delimiter);
     }
 
     /***
@@ -53,7 +60,7 @@ public class TextBuffer {
         // We use a limit of -1 here to force a delimiter at the end of the string to yield an empty string.
         List<String> lines = Arrays.asList(string.toString().split((String) delimiter, -1));
 
-        return new TextBuffer(lines);
+        return new TextBuffer(lines).setDelimiter(delimiter);
     }
 
 

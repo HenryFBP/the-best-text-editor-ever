@@ -17,5 +17,4 @@ public class Library {
         Toast.makeText(c, charSequence.toString(), length).show();
     }
 
-
 }
