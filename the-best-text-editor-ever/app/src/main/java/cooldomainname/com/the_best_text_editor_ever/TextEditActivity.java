@@ -177,7 +177,11 @@ public class TextEditActivity extends AppCompatActivity implements SaveFileDialo
 
         try {
             textBuffer.saveTo(file);
-            Log.i(this.getClass().getSimpleName(), String.format("Saving file to '%s.'", file.getAbsolutePath()));
+
+            String message = String.format("Saving file to '%s.'", file.getAbsolutePath());
+
+            toastLong(message, this.getApplicationContext());
+            Log.i(this.getClass().getSimpleName(), message);
         } catch (IOException e) {
             e.printStackTrace();
             toastLong("Couldn't save file.", getApplicationContext());
@@ -228,8 +232,8 @@ public class TextEditActivity extends AppCompatActivity implements SaveFileDialo
         try {
             reader = new BufferedReader(new FileReader(file));
 
-            // First char should be 'I'.
-            if ((reader.read() != 'I')) throw new AssertionError();
+            // First char should be the first character of our text snippet.
+            if ((reader.read() != coolText.charAt(0))) throw new AssertionError();
 
             CharSequence theRest = reader.readLine();
 
@@ -237,15 +241,20 @@ public class TextEditActivity extends AppCompatActivity implements SaveFileDialo
             // we should have consumed the rest of the input by asking for one line.
             if (reader.ready()) throw new AssertionError();
 
+            // It also should NOT contain newlines, as we replaced 'em all.
+            if (((String) theRest).contains("\n")) throw new AssertionError();
+
             // How many times the delimiter occurs.
             int delimOccurrences = ((String) theRest).split((String) coolDelim).length;
+            int preferredOccurrences = ((String) coolText).split((String) coolDelim).length;
 
-            // We should have exactly 5 delimiters, plus one for splitting the list.
-            if (delimOccurrences != (5 + 1))
-                throw new AssertionError(String.format("%d != %d", delimOccurrences, (5 + 1)));
+            // We should have as many as our original string does.
+            if (delimOccurrences != preferredOccurrences)
+                throw new AssertionError(String.format("%d != %d", delimOccurrences, preferredOccurrences));
 
-            // Last character should be 'F'.
-            if (theRest.charAt(theRest.length() - 1) != 'F') throw new AssertionError();
+            // Last character should be the end of our text snippet.
+            if (theRest.charAt(theRest.length() - 1) != coolText.charAt(coolText.length() - 1))
+                throw new AssertionError();
 
             // Second-to-last character should be the end of our delimiter sequence.
             if (theRest.charAt(theRest.length() - 2) != coolDelim.charAt(coolDelim.length() - 1))
