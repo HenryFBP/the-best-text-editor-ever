@@ -63,7 +63,6 @@ public class TextBuffer {
         return new TextBuffer(lines).setDelimiter(delimiter);
     }
 
-
     /***
      * Get a TextBuffer from a file.
      * Uses the system's newline (i.e. '\n' or "\r\n")
@@ -97,6 +96,21 @@ public class TextBuffer {
 
         // Create a TextBuffer from the lines, and set its delimiter.
         return fromDelimitedString(builder.toString(), delimiter).setDelimiter(delimiter);
+    }
+
+    /***
+     * Given an {@link EditText}, populate it entirely with this {@link TextBuffer}'s text.
+     * @param editText an {@link EditText} element.
+     *
+     * It does not erase existing text, but simply appends it.
+     */
+    public void populateEditText(EditText editText) {
+
+        for (int i = 0; i < this.lines.size(); i++) {
+            CharSequence charSequence = this.lines.get(i);
+            editText.append(charSequence);
+
+        }
     }
 
     /***
