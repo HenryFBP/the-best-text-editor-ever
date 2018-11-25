@@ -13,7 +13,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <Spinner
+            <cooldomainname.com.the_best_text_editor_ever.BetterSpinner
                     android:id="@+id/spinnerTextActions"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
                     app:layout_constraintVertical_bias="0.0"
                     app:layout_constraintEnd_toStartOf="@+id/spinnerFileActions"
                     android:layout_marginEnd="8dp" android:layout_marginRight="8dp"/>
-            <Spinner
+            <cooldomainname.com.the_best_text_editor_ever.BetterSpinner
                     android:id="@+id/spinnerFileActions"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:ems="10"
-                    android:id="@+id/editText" android:text="@string/defaultEditorText"
+                    android:id="@+id/editTextEditor" android:text="@string/defaultEditorText"
                     android:importantForAutofill="no"
                     android:hint="@string/editTextHint"/>
         </ScrollView>

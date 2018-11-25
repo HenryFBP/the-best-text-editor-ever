@@ -1,10 +1,11 @@
 package cooldomainname.com.the_best_text_editor_ever;
 
-import kotlin.NotImplementedError;
+import android.widget.EditText;
 
-import java.nio.file.Path;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * A buffer of text.
@@ -14,7 +15,7 @@ public class TextBuffer {
     /**
      * What is each line separated by?
      */
-    public CharSequence delimiter = "\n";
+    private CharSequence delimiter = System.getProperty("line.separator");
 
     /**
      * The lines.
@@ -30,25 +31,113 @@ public class TextBuffer {
         }
     }
 
+    public TextBuffer(List<String> lines) {
+        for (CharSequence line : lines) {
+            this.add(line);
+        }
+    }
+
+    /***
+     * Given an {@link EditText} element, return a TextBuffer from it.
+     */
+    public static TextBuffer fromEditText(EditText editText) {
+        return fromEditText(editText, System.getProperty("line.separator"));
+    }
+
+    /***
+     * Given an {@link EditText} element and a delimiter, return a TextBuffer from it.
+     */
+    public static TextBuffer fromEditText(EditText editText, CharSequence delimiter) {
+        return fromDelimitedString(editText.getText().toString(), delimiter);
+    }
+
+    /***
+     * Given a string demarcated with delimiters, generate a {@link TextBuffer} from it.
+     */
+    public static TextBuffer fromDelimitedString(CharSequence string, CharSequence delimiter) {
+        // Split the string by the delimiter.
+        //
+        // We use a limit of -1 here to force a delimiter at the end of the string to yield an empty string.
+        List<String> lines = Arrays.asList(string.toString().split((String) delimiter, -1));
+
+        return new TextBuffer(lines).setDelimiter(delimiter);
+    }
+
     /***
      * Get a TextBuffer from a file.
-     * @param path The file.
+     * Uses the system's newline (i.e. '\n' or "\r\n")
+     * @param file The file.
      * @return a TextBuffer.
      */
-    public static TextBuffer fromFile(Path path) {
-        TextBuffer textBuffer = new TextBuffer();
+    public static TextBuffer fromFile(File file) throws IOException {
+        return fromFile(file, System.getProperty("line.separator"));
+    }
 
-        textBuffer.add("Not implemented.");
+    /***
+     * Get a TextBuffer from a file.
+     * @param file The file.
+     * @param delimiter The delimiter to indicate a new line.
+     * @return a TextBuffer.
+     */
+    public static TextBuffer fromFile(File file, CharSequence delimiter) throws IOException {
 
-        return textBuffer;
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+
+        StringBuilder builder = new StringBuilder();
+
+        // Read all characters until file is empty.
+        //
+        // The reason we do this instead of reader.readLine() is to capture '\n' and "\r\n".
+        //
+        // The reader.readLine() will normally discard those sequences.
+        while (reader.ready()) {
+            builder.append(((char) reader.read()));
+        }
+
+        // Create a TextBuffer from the lines, and set its delimiter.
+        return fromDelimitedString(builder.toString(), delimiter).setDelimiter(delimiter);
+    }
+
+    /***
+     * Given an {@link EditText}, populate it entirely with this {@link TextBuffer}'s text.
+     * @param editText an {@link EditText} element.
+     *
+     * It does not erase existing text, but simply appends it.
+     */
+    public TextBuffer populateEditText(EditText editText) {
+
+        for (int i = 0; i < this.lines.size(); i++) {
+            CharSequence charSequence = this.lines.get(i);
+            editText.append(charSequence);
+
+            if (i < this.lines.size() - 1) { //Add a delimiter
+                editText.append(this.delimiter);
+            }
+        }
+
+        return this;
     }
 
     /***
      * Save this TextBuffer to a file.
-     * @param path Where to save it?
+     * @param file What file to saveTo it to?
      */
-    public static void save(TextBuffer textBuffer, Path path) {
-        throw new NotImplementedError("Not implemented.");
+    public void saveTo(File file) throws IOException {
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+
+        for (int i = 0; i < this.lines.size(); i++) {
+
+            CharSequence charSequence = this.lines.get(i);
+
+            writer.write(String.valueOf(charSequence));
+
+            if (i < this.lines.size() - 1) {
+                writer.write(String.valueOf(this.delimiter));
+            }
+        }
+
+        writer.close();
     }
 
     public TextBuffer setDelimiter(CharSequence delimiter) {
@@ -67,6 +156,10 @@ public class TextBuffer {
         this.lines.addAll(Arrays.asList(lines));
 
         return this;
+    }
+
+    public CharSequence getLine(int location) {
+        return this.lines.get(location);
     }
 
     @Override
