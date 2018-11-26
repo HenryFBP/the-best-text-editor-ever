@@ -46,10 +46,11 @@ public class SEUtils {
     }
 
     /**
-     * Given a mixed list of
-     *
-     * @param args
-     * @return
+     * Given a mixed list of either Objects that do NOT extend {@link Collection}, or {@link Object}s that DO extend {@link Collection}, return a flattened list of those objects.
+     * <p>
+     * If an {@link Object} extends {@link Collection}, it will be flattened (not recursively), and all of its elements will be added to the array that will be returned.
+     * <p>
+     * If it doesn't extend {@link Collection}, it will just be added to the array that will be returned.
      */
     public static List<?> addMixed(Object... args) {
 
