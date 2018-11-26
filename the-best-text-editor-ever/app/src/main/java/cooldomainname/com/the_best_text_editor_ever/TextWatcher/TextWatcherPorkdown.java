@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.TextWatcher;
+import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 
@@ -30,7 +31,7 @@ public class TextWatcherPorkdown implements TextWatcher {
 
             // Highlight it.
             s.setSpan(
-                    new ForegroundColorSpan(Color.CYAN),
+                    new BackgroundColorSpan(Color.CYAN),
                     index,
                     index + DELICIOUS.length(),
                     Spannable.SPAN_COMPOSING);
