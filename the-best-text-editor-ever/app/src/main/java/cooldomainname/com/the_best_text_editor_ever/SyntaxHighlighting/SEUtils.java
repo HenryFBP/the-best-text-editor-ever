@@ -10,6 +10,7 @@ import java.util.List;
 /***
  * Utility class for {@link SyntaxElement}s.
  */
+@SuppressWarnings("unchecked")
 public class SEUtils {
 
     public static final HashMap<String, Integer> javaColors = new HashMap<String, Integer>() {{
@@ -19,13 +20,13 @@ public class SEUtils {
     }};
     public static final List<SyntaxElement> javaSyntaxElements = (List<SyntaxElement>) addMixed(
             applyColor(javaColors.get("keyword"),
-                    "new", "public", "private", "static", "volatile", "synchronized", "do", "while", "case"),
+                    "new", "public", "private", "static", "volatile", "synchronized", "do", "while", "case", "class", "extends", "return", "implements"),
 
             applyColor(javaColors.get("primitive"),
                     "int", "void", "char", "boolean", "byte", "float", "double"),
 
             applyColor(javaColors.get("type"),
-                    "String", "Object", "Child", "YoMomma", "Integer", "Double", "Float", "Byte")
+                    "String", "Object", "Integer", "Double", "Float", "Byte")
     );
 
     /***
