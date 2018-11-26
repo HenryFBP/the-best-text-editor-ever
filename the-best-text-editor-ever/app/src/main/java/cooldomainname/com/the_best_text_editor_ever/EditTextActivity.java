@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import cooldomainname.com.the_best_text_editor_ever.OpenFileDialogFragment.OpenFileDialogListener;
 import cooldomainname.com.the_best_text_editor_ever.SaveFileDialogFragment.SaveFileDialogListener;
+import cooldomainname.com.the_best_text_editor_ever.TextWatcher.TextWatcherPorkdown;
 
 import java.io.*;
 import java.util.Arrays;

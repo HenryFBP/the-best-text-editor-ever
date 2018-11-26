@@ -1,10 +1,11 @@
-package cooldomainname.com.the_best_text_editor_ever;
+package cooldomainname.com.the_best_text_editor_ever.TextWatcher;
 
 import android.graphics.Color;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 
 public class TextWatcherPorkdown implements TextWatcher {
     final String DELICIOUS = "PORK";
@@ -32,7 +33,7 @@ public class TextWatcherPorkdown implements TextWatcher {
                     new ForegroundColorSpan(Color.CYAN),
                     index,
                     index + DELICIOUS.length(),
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    Spannable.SPAN_COMPOSING);
 
             // Get next occurrence.
             index = string.indexOf(DELICIOUS, index + 1);
