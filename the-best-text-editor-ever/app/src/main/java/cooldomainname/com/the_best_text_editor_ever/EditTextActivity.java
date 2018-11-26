@@ -14,7 +14,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 import cooldomainname.com.the_best_text_editor_ever.OpenFileDialogFragment.OpenFileDialogListener;
 import cooldomainname.com.the_best_text_editor_ever.SaveFileDialogFragment.SaveFileDialogListener;
-import cooldomainname.com.the_best_text_editor_ever.TextWatcher.TextWatcherPorkdown;
+import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.TextWatchers.TextWatcherJava;
+import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.TextWatchers.TextWatcherPorkdown;
 
 import java.io.*;
 import java.util.Arrays;
@@ -47,9 +48,11 @@ public class EditTextActivity extends AppCompatActivity implements OpenFileDialo
      *
      * It maps file extensions to classes that can highlight EditText elements.
      */
+    //@formatter:off
     private HashMap<String, Class<? extends TextWatcher>> extensionTextWatcherMap =
             new HashMap<String, Class<? extends TextWatcher>>() {{
                 put("porkdown", TextWatcherPorkdown.class);
+                put("java", TextWatcherJava.class);
             }};
 
     /**

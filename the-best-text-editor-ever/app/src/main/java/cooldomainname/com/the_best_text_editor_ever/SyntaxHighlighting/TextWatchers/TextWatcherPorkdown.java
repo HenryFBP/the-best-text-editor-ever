@@ -1,12 +1,10 @@
-package cooldomainname.com.the_best_text_editor_ever.TextWatcher;
+package cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.TextWatchers;
 
 import android.graphics.Color;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.TextWatcher;
 import android.text.style.BackgroundColorSpan;
-import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 
 public class TextWatcherPorkdown implements TextWatcher {
     final String DELICIOUS = "PORK";
