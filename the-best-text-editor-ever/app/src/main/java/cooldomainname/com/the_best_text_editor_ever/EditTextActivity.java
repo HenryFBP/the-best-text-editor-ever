@@ -63,7 +63,13 @@ public class EditTextActivity extends AppCompatActivity implements OpenFileDialo
 
         SaveFileDialogFragment saveFileDialogFragment = new SaveFileDialogFragment();
 
+        Bundle bundle = new Bundle();
+        bundle.putString("title", "Save File");
+
+        saveFileDialogFragment.setArguments(bundle);
+
         saveFileDialogFragment.show(fm, "title");
+
     }
 
     /**
@@ -74,8 +80,13 @@ public class EditTextActivity extends AppCompatActivity implements OpenFileDialo
 
         OpenFileDialogFragment openFileDialogFragment = new OpenFileDialogFragment();
 
+        Bundle bundle = new Bundle();
+        bundle.putString("title", "Open File");
+
+        openFileDialogFragment.setArguments(bundle);
+
         openFileDialogFragment.show(fm, "title");
-    }
+        }
 
     /**
      * When this Activity is created.
@@ -213,7 +224,7 @@ public class EditTextActivity extends AppCompatActivity implements OpenFileDialo
         try {
             textBuffer.saveTo(file);
 
-            String message = String.format("Saving file to '%s.'", file.getAbsolutePath());
+            String message = String.format("Saved file to '%s.'", file.getAbsolutePath());
 
             toastLong(message, this.getApplicationContext());
             Log.i(this.getClass().getSimpleName(), message);

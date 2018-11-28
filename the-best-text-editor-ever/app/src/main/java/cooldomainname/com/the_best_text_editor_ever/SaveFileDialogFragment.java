@@ -11,6 +11,7 @@ public class SaveFileDialogFragment extends FileDialogFragment implements TextVi
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
 
         // Setup a callback when the "Done" button is pressed on keyboard
@@ -23,7 +24,8 @@ public class SaveFileDialogFragment extends FileDialogFragment implements TextVi
     // REQUIRES a 'soft keyboard' (virtual keyboard)
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        if (actionId == EditorInfo.IME_ACTION_DONE) {
+        if (actionId == EditorInfo.IME_ACTION_DONE ||
+                actionId == EditorInfo.IME_ACTION_NEXT) {
             // Return input text back to activity through the implemented listener
             SaveFileDialogListener listener = (SaveFileDialogListener) getActivity();
             listener.onFinishEditSaveDialog(mEditText.getText().toString());
@@ -37,6 +39,6 @@ public class SaveFileDialogFragment extends FileDialogFragment implements TextVi
     // 1. Defines the listener interface with a method passing back data result.
     public interface SaveFileDialogListener {
         void onFinishEditSaveDialog(String inputText);
-
     }
+
 }
