@@ -2,51 +2,20 @@ package cooldomainname.com.the_best_text_editor_ever;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.view.*;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 import android.widget.TextView;
 
-public class OpenFileDialogFragment extends DialogFragment implements TextView.OnEditorActionListener {
-    private static String DEFAULT_TITLE = "Filename";
-    private EditText mEditText;
+public class OpenFileDialogFragment extends FileDialogFragment implements TextView.OnEditorActionListener {
 
-    public OpenFileDialogFragment() {
-        // Empty constructor is required for DialogFragment
-        // Make sure not to add arguments to the constructor
-        // Use `newInstance` instead as shown below
-    }
 
-    public static OpenFileDialogFragment newInstance(String title) {
-        OpenFileDialogFragment frag = new OpenFileDialogFragment();
-        Bundle args = new Bundle();
-        args.putString("title", title);
-        frag.setArguments(args);
-        return frag;
-    }
-
-    // ...
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
-
-        // Get field from view
-        mEditText = view.findViewById(R.id.editTextFilename);
-
-        // Fetch arguments from bundle and set title
-        String title = (getArguments() != null) ?
-                getArguments().getString("title", DEFAULT_TITLE)
-                :
-                DEFAULT_TITLE;
-
-        getDialog().setTitle(title);
-
-        // Show soft keyboard automatically and request focus to field
-        mEditText.requestFocus();
-        getDialog().getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-
         // 2. Setup a callback when the "Done" button is pressed on keyboard
         mEditText.setOnEditorActionListener(this);
     }
@@ -77,7 +46,6 @@ public class OpenFileDialogFragment extends DialogFragment implements TextView.O
     // 1. Defines the listener interface with a method passing back data result.
     public interface OpenFileDialogListener {
         void onFinishEditOpenDialog(String inputText);
-
     }
 
 }
