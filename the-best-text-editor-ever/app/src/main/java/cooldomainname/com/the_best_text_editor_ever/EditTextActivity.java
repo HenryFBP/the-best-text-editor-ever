@@ -36,7 +36,7 @@ public class EditTextActivity extends AppCompatActivity implements OpenFileDialo
     /**
      * Actions you can perform on a file.
      */
-    private List<String> listFileActions = Arrays.asList("", "open", "save", "rename", "run tests");
+    private List<String> listFileActions = Arrays.asList("", "open", "open url", "save", "rename", "run tests");
 
     /**
      * Actions you can perform on text.
@@ -72,6 +72,17 @@ public class EditTextActivity extends AppCompatActivity implements OpenFileDialo
 
         saveFileDialogFragment.show(fm, "title");
 
+    }
+
+    /**
+     * We want to open the 'open url' dialog.
+     */
+    private void openOpenUrlDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+
+        toastLong("not implemented lol :^)", getApplicationContext());
+
+        //TODO actually open da dialog
     }
 
     /**
@@ -132,6 +143,11 @@ public class EditTextActivity extends AppCompatActivity implements OpenFileDialo
 
                         case "open": {
                             openOpenFileDialog();
+                            break;
+                        }
+
+                        case "open url": {
+                            openOpenUrlDialog();
                             break;
                         }
 
