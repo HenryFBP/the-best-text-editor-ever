@@ -1,4 +1,4 @@
-package cooldomainname.com.the_best_text_editor_ever;
+package cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.DialogFragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,13 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.*;
+import cooldomainname.com.the_best_text_editor_ever.R;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static cooldomainname.com.the_best_text_editor_ever.Library.toastLong;
 
 /**
  * A general fragment for doing...something with a file.

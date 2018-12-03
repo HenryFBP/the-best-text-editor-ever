@@ -12,8 +12,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
-import cooldomainname.com.the_best_text_editor_ever.OpenFileDialogFragment.OpenFileDialogListener;
-import cooldomainname.com.the_best_text_editor_ever.SaveFileDialogFragment.SaveFileDialogListener;
+import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.DialogFragments.OpenFileDialogFragment;
+import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.DialogFragments.OpenFileDialogFragment.OpenFileDialogListener;
+import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.DialogFragments.SaveFileDialogFragment;
+import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.DialogFragments.SaveFileDialogFragment.SaveFileDialogListener;
 import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.TextWatchers.TextWatcherJava;
 import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.TextWatchers.TextWatcherPorkdown;
 
@@ -86,7 +88,7 @@ public class EditTextActivity extends AppCompatActivity implements OpenFileDialo
         openFileDialogFragment.setArguments(bundle);
 
         openFileDialogFragment.show(fm, "title");
-        }
+    }
 
     /**
      * When this Activity is created.
