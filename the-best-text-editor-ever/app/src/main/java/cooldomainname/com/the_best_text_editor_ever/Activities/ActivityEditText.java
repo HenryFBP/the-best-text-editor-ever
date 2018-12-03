@@ -15,11 +15,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 import cooldomainname.com.the_best_text_editor_ever.BetterFile;
 import cooldomainname.com.the_best_text_editor_ever.BetterSpinner;
-import cooldomainname.com.the_best_text_editor_ever.R;
 import cooldomainname.com.the_best_text_editor_ever.DialogFragments.OpenFileDialogFragment;
 import cooldomainname.com.the_best_text_editor_ever.DialogFragments.OpenFileDialogFragment.OpenFileDialogListener;
 import cooldomainname.com.the_best_text_editor_ever.DialogFragments.SaveFileDialogFragment;
 import cooldomainname.com.the_best_text_editor_ever.DialogFragments.SaveFileDialogFragment.SaveFileDialogListener;
+import cooldomainname.com.the_best_text_editor_ever.R;
 import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.TextWatchers.TextWatcherJava;
 import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.TextWatchers.TextWatcherPorkdown;
 import cooldomainname.com.the_best_text_editor_ever.TextBuffer;
@@ -29,6 +29,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import static cooldomainname.com.the_best_text_editor_ever.Activities.ActivityDownloadFile.BUNDLE_KEY_FILE_URI;
+import static cooldomainname.com.the_best_text_editor_ever.Activities.ActivityEditText.RequestCode.OPEN_URL;
 import static cooldomainname.com.the_best_text_editor_ever.Library.toastLong;
 
 public class ActivityEditText extends AppCompatActivity implements OpenFileDialogListener, SaveFileDialogListener {
@@ -55,7 +57,6 @@ public class ActivityEditText extends AppCompatActivity implements OpenFileDialo
      *
      * It maps file extensions to classes that can highlight EditText elements.
      */
-    //@formatter:off
     private HashMap<String, Class<? extends TextWatcher>> extensionTextWatcherMap =
             new HashMap<String, Class<? extends TextWatcher>>() {{
                 put("porkdown", TextWatcherPorkdown.class);
@@ -83,7 +84,7 @@ public class ActivityEditText extends AppCompatActivity implements OpenFileDialo
      * We want to open the 'open url' dialog.
      */
     private void openOpenUrlDialog() {
-        startActivity(new Intent(this, ActivityDownloadFile.class));
+        startActivityForResult(new Intent(this, ActivityDownloadFile.class), OPEN_URL.ordinal());
     }
 
     /**
@@ -100,6 +101,21 @@ public class ActivityEditText extends AppCompatActivity implements OpenFileDialo
         openFileDialogFragment.setArguments(bundle);
 
         openFileDialogFragment.show(fm, "title");
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == RequestCode.OPEN_URL.ordinal()) //If we returned because we wanted to open a URL,
+
+            if (resultCode == RESULT_OK) { //If we're good
+
+                if (data.hasExtra(BUNDLE_KEY_FILE_URI)) { //If we have
+                    String filepath = data.getStringExtra(BUNDLE_KEY_FILE_URI);
+
+                    openFile(new BetterFile(filepath));
+                }
+            }
     }
 
     /**
@@ -226,7 +242,6 @@ public class ActivityEditText extends AppCompatActivity implements OpenFileDialo
 
     }
 
-
     /***
      * When the user wishes to save the file.
      * @param inputText The text that was input.
@@ -272,26 +287,7 @@ public class ActivityEditText extends AppCompatActivity implements OpenFileDialo
         }
     }
 
-    /**
-     * The user wishes to open a file.
-     */
-    @Override
-    public void onFinishEditOpenDialog(String inputText) {
-
-        File dir = getApplicationContext().getFilesDir();
-
-        BetterFile file = new BetterFile(dir, inputText);
-
-        // File doesn't exist.
-        if (!file.exists()) {
-            toastLong(String.format(
-                    "File called '%s' does not exist at: \n" +
-                            "'%s'.",
-                    inputText, dir), getApplicationContext());
-
-            return;
-        }
-
+    public void openFile(BetterFile file) {
         try {
             // Get a TextBuffer from our file.
             textBuffer = TextBuffer.fromFile(file);
@@ -319,6 +315,28 @@ public class ActivityEditText extends AppCompatActivity implements OpenFileDialo
 
     }
 
+    /**
+     * The user wishes to open a file.
+     */
+    @Override
+    public void onFinishEditOpenDialog(String inputText) {
+
+        File dir = getApplicationContext().getFilesDir();
+
+        BetterFile file = new BetterFile(dir, inputText);
+
+        // File doesn't exist.
+        if (!file.exists()) {
+            toastLong(String.format(
+                    "File called '%s' does not exist at: \n" +
+                            "'%s'.",
+                    inputText, dir), getApplicationContext());
+
+            return;
+        }
+
+        openFile(file);
+    }
 
     /***
      * Test that we can save a file to disk given an {@link EditText} object with text.
@@ -402,5 +420,10 @@ public class ActivityEditText extends AppCompatActivity implements OpenFileDialo
             throw new AssertionError("YA PIPE IS BROKEN!!!");
         }
 
+    }
+
+
+    enum RequestCode {
+        OPEN_URL,
     }
 }

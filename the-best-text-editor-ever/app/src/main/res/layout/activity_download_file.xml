@@ -18,7 +18,7 @@
             android:ems="10"
             android:id="@+id/editTextFilename"
             android:layout_margin="8dp"
-            android:inputType="text" android:text="https://www.google.com/"
+            android:inputType="text" android:text="https://raw.githubusercontent.com/HenryFBP/the-best-text-editor-ever/master/the-best-text-editor-ever/app/src/main/java/cooldomainname/com/the_best_text_editor_ever/SyntaxHighlighting/SEUtils.java"
             android:layout_marginTop="8dp"/>
     <ProgressBar
             style="?android:attr/progressBarStyleHorizontal"

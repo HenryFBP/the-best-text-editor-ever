@@ -12,10 +12,14 @@ import cooldomainname.com.the_best_text_editor_ever.Library.*
 import cooldomainname.com.the_best_text_editor_ever.R
 import java.io.File
 import java.io.FileOutputStream
-import java.lang.Thread.sleep
 import java.net.URL
 
 class ActivityDownloadFile : AppCompatActivity() {
+
+    companion object {
+        // Key for storing our uri once it's downloaded.
+        const val BUNDLE_KEY_FILE_URI = "downloaded file"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +35,6 @@ class ActivityDownloadFile : AppCompatActivity() {
         editTextFilename.requestFocus()
 
         // Show the keyboard
-        // FIXME this doesn't work
         showKeyboard(this@ActivityDownloadFile)
 
         // When they do something with the keyboard,
@@ -57,7 +60,7 @@ class ActivityDownloadFile : AppCompatActivity() {
                 //TODO make progress bar work. Put incremental stuff inside of this thread.
                 Thread(Runnable {
                     val output = FileOutputStream(outputFile)
-                    val input = URL(url).openStream()
+                    val input = URL(url).openStream() //TODO error trapping for 404, 403, no internet, etc.
 
                     textViewStatus.append("Opened URL $url.\n")
 
@@ -75,7 +78,7 @@ class ActivityDownloadFile : AppCompatActivity() {
 
                     // Return back to the parent activity our downloaded file's URL.
                     var intent = Intent()
-                    intent.putExtra("downloaded file", outputFile.absolutePath);
+                    intent.putExtra(BUNDLE_KEY_FILE_URI, outputFile.absolutePath);
                     setResult(RESULT_OK, intent)
 
                     Thread.sleep(2000) //FIXME is this really the best way to wait?
