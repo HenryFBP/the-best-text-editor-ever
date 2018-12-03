@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.DialogFragments.OpenFileDialogFragment;
 import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.DialogFragments.OpenFileDialogFragment.OpenFileDialogListener;
+import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.DialogFragments.OpenURLDialogFragment;
 import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.DialogFragments.SaveFileDialogFragment;
 import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.DialogFragments.SaveFileDialogFragment.SaveFileDialogListener;
 import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.TextWatchers.TextWatcherJava;
@@ -25,8 +26,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import static cooldomainname.com.the_best_text_editor_ever.Library.toastLong;
+import static cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.DialogFragments.OpenURLDialogFragment.OpenURLDialogListener;
 
-public class EditTextActivity extends AppCompatActivity implements OpenFileDialogListener, SaveFileDialogListener {
+public class EditTextActivity extends AppCompatActivity implements OpenFileDialogListener, SaveFileDialogListener, OpenURLDialogListener {
 
     /***
      * The TextBuffer that stores our text.
@@ -82,7 +84,14 @@ public class EditTextActivity extends AppCompatActivity implements OpenFileDialo
 
         toastLong("not implemented lol :^)", getApplicationContext());
 
-        //TODO actually open da dialog
+        OpenURLDialogFragment openURLDialogFragment = new OpenURLDialogFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("title", "Open from URL");
+
+        openURLDialogFragment.setArguments(bundle);
+
+        openURLDialogFragment.show(fm, "title");
     }
 
     /**
@@ -186,6 +195,7 @@ public class EditTextActivity extends AppCompatActivity implements OpenFileDialo
         adapterTextActions.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTextActions.setAdapter(adapterTextActions);
 
+        /* Actions that can be performed on text. */
         spinnerTextActions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -268,6 +278,14 @@ public class EditTextActivity extends AppCompatActivity implements OpenFileDialo
         } catch (InstantiationException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * The user wishes to download a file.
+     */
+    @Override
+    public void onFinishEditURLOpenDialog(String inputText) {
+        toastLong(inputText, getApplicationContext());
     }
 
     /**
