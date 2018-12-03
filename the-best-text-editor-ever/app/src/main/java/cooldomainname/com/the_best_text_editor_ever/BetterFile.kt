@@ -18,8 +18,24 @@ class BetterFile : File {
         return this
     }
 
+    @NonNull
+    fun createIfNotExists(): BetterFile {
+        if (!this.exists()) {
+            this.parentFile.mkdirs()
+            this.createNewFile()
+        }
+        return this
+    }
+
     @Nullable
     fun extension(): String? {
         return this.extension
+    }
+
+    /***
+     * Returns a new file with an extension.
+     */
+    fun setExtension(extension: String): BetterFile {
+        return BetterFile(this.absoluteFile.toString() + extension)
     }
 }

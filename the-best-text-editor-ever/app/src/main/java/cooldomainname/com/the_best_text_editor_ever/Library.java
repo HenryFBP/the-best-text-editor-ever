@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 public class Library {
 
+    public static final CharSequence unsafeFileCharacters = "|\\?*<\":>+[]/'";
+
     public static void toastLong(CharSequence charSequence, Context c) {
         toast(charSequence, c, Toast.LENGTH_LONG);
     }
@@ -37,5 +39,24 @@ public class Library {
         }
     }
 
+    public static void showKeyboard(Activity activity) {
+        View view = activity.getCurrentFocus();
+        InputMethodManager methodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        assert methodManager != null && view != null;
+        methodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+
+    /***
+     * Make a string a safe file name.
+     */
+    public static String fileSafeString(String unsafe) {
+
+        for (Character c : unsafeFileCharacters.toString().toCharArray()) {
+            unsafe = unsafe.replace(c.toString(), "");
+        }
+
+        return unsafe;
+    }
 
 }
