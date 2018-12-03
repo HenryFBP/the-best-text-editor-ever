@@ -1,6 +1,7 @@
-package cooldomainname.com.the_best_text_editor_ever;
+package cooldomainname.com.the_best_text_editor_ever.Activities;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -12,13 +13,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
+import cooldomainname.com.the_best_text_editor_ever.BetterFile;
+import cooldomainname.com.the_best_text_editor_ever.BetterSpinner;
+import cooldomainname.com.the_best_text_editor_ever.R;
 import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.DialogFragments.OpenFileDialogFragment;
 import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.DialogFragments.OpenFileDialogFragment.OpenFileDialogListener;
-import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.DialogFragments.OpenURLDialogFragment;
 import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.DialogFragments.SaveFileDialogFragment;
 import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.DialogFragments.SaveFileDialogFragment.SaveFileDialogListener;
 import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.TextWatchers.TextWatcherJava;
 import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.TextWatchers.TextWatcherPorkdown;
+import cooldomainname.com.the_best_text_editor_ever.TextBuffer;
 
 import java.io.*;
 import java.util.Arrays;
@@ -26,9 +30,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import static cooldomainname.com.the_best_text_editor_ever.Library.toastLong;
-import static cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.DialogFragments.OpenURLDialogFragment.OpenURLDialogListener;
 
-public class EditTextActivity extends AppCompatActivity implements OpenFileDialogListener, SaveFileDialogListener, OpenURLDialogListener {
+public class ActivityEditText extends AppCompatActivity implements OpenFileDialogListener, SaveFileDialogListener {
 
     /***
      * The TextBuffer that stores our text.
@@ -80,18 +83,7 @@ public class EditTextActivity extends AppCompatActivity implements OpenFileDialo
      * We want to open the 'open url' dialog.
      */
     private void openOpenUrlDialog() {
-        FragmentManager fm = getSupportFragmentManager();
-
-        toastLong("not implemented lol :^)", getApplicationContext());
-
-        OpenURLDialogFragment openURLDialogFragment = new OpenURLDialogFragment();
-
-        Bundle bundle = new Bundle();
-        bundle.putString("title", "Open from URL");
-
-        openURLDialogFragment.setArguments(bundle);
-
-        openURLDialogFragment.show(fm, "title");
+        startActivity(new Intent(this, ActivityDownloadFile.class));
     }
 
     /**
@@ -278,14 +270,6 @@ public class EditTextActivity extends AppCompatActivity implements OpenFileDialo
         } catch (InstantiationException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * The user wishes to download a file.
-     */
-    @Override
-    public void onFinishEditURLOpenDialog(String inputText) {
-        toastLong(inputText, getApplicationContext());
     }
 
     /**
