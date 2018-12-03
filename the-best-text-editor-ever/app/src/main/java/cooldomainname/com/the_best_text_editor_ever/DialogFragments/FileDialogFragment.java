@@ -1,4 +1,4 @@
-package cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.DialogFragments;
+package cooldomainname.com.the_best_text_editor_ever.DialogFragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

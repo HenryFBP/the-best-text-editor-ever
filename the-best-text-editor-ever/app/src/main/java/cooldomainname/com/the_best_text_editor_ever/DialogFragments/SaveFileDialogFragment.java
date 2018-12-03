@@ -1,4 +1,4 @@
-package cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.DialogFragments;
+package cooldomainname.com.the_best_text_editor_ever.DialogFragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
-public class OpenFileDialogFragment extends FileDialogFragment implements TextView.OnEditorActionListener {
+public class SaveFileDialogFragment extends FileDialogFragment implements TextView.OnEditorActionListener {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -27,8 +27,8 @@ public class OpenFileDialogFragment extends FileDialogFragment implements TextVi
         if (actionId == EditorInfo.IME_ACTION_DONE ||
                 actionId == EditorInfo.IME_ACTION_NEXT) {
             // Return input text back to activity through the implemented listener
-            OpenFileDialogListener listener = (OpenFileDialogListener) getActivity();
-            listener.onFinishEditOpenDialog(mEditText.getText().toString());
+            SaveFileDialogListener listener = (SaveFileDialogListener) getActivity();
+            listener.onFinishEditSaveDialog(mEditText.getText().toString());
             // Close the dialog and return back to the parent activity
             dismiss();
             return true;
@@ -37,8 +37,8 @@ public class OpenFileDialogFragment extends FileDialogFragment implements TextVi
     }
 
     // 1. Defines the listener interface with a method passing back data result.
-    public interface OpenFileDialogListener {
-        void onFinishEditOpenDialog(String inputText);
+    public interface SaveFileDialogListener {
+        void onFinishEditSaveDialog(String inputText);
     }
 
 }
