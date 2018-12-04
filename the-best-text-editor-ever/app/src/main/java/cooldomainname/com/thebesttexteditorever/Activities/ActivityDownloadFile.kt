@@ -11,7 +11,10 @@ import cooldomainname.com.thebesttexteditorever.BetterFile
 import cooldomainname.com.thebesttexteditorever.Library.*
 import cooldomainname.com.thebesttexteditorever.R
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.FileOutputStream
+import java.io.InputStream
+import java.net.MalformedURLException
 import java.net.URL
 
 class ActivityDownloadFile : AppCompatActivity() {
@@ -56,14 +59,49 @@ class ActivityDownloadFile : AppCompatActivity() {
                     outputFile = BetterFile(outputFile.absolutePath).createIfNotExists()
                 }
 
-
                 //TODO make progress bar work. Put incremental stuff inside of this thread.
                 Thread(Runnable {
+
+                    var input: InputStream? = null
                     val output = FileOutputStream(outputFile)
-                    val input = URL(url).openStream() //TODO error trapping for 404, 403, no internet, etc.
+
+                    try {
+                        input = URL(url).openStream() //TODO error trapping for 403, no internet, etc.
+
+
+                    } catch (e: FileNotFoundException) { //If 404,
+                        runOnUiThread {
+                            toastLong("HTTP Error 404, not found.", applicationContext)
+                        }
+                        logException(e)
+                        return@Runnable
+
+                    } catch (e: MalformedURLException) { // Malformed URL
+                        runOnUiThread {
+                            toastLong(
+                                "URL is malformed. Check your colons and slashes.",
+                                applicationContext
+                            )
+                        }
+                        logException(e)
+                        return@Runnable
+
+                    } catch (e: Exception) { // General exception
+                        runOnUiThread {
+                            toastLong(
+                                """Other exception occurred:
+                                |${e.localizedMessage}""".trimMargin(), applicationContext
+                            )
+                        }
+                        logException(e)
+                        return@Runnable
+                    }
+
+                    assert(input != null)
 
                     textViewStatus.append("Opened URL $url.\n")
 
+                    //FIXME no progress
                     // Copy input to output.
                     val bytesCopied = input.use {
                         output.use {
@@ -77,13 +115,12 @@ class ActivityDownloadFile : AppCompatActivity() {
                     textViewStatus.append("$bytesCopied bytes copied.\n")
 
                     // Return back to the parent activity our downloaded file's URL.
-                    var intent = Intent()
+                    val intent = Intent()
                     intent.putExtra(BUNDLE_KEY_FILE_URI, outputFile.absolutePath);
                     setResult(RESULT_OK, intent)
 
-                    Thread.sleep(2000) //FIXME is this really the best way to wait?
-
                     finish()
+
                 }).start()
 
 

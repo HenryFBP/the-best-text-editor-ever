@@ -2,9 +2,11 @@ package cooldomainname.com.thebesttexteditorever;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+import com.google.common.base.Throwables;
 
 public class Library {
 
@@ -57,6 +59,14 @@ public class Library {
         }
 
         return unsafe;
+    }
+
+    public static void logException(Exception e) {
+        Log.e(e.getClass().getName(), e.getMessage(), e.getCause());
+    }
+
+    public static void logExceptionStacktrace(Exception e) {
+        Log.e(e.getClass().getName(), Throwables.getStackTraceAsString(e), e.getCause());
     }
 
 }
