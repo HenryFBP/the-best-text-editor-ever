@@ -1,0 +1,24 @@
+class Bubungus extends Fungus implements Friend, Decomposer {
+
+    public static void main(String[] args) {
+        for (int i = 0; i < args.length; i++) {
+            String.format("%dth argument is '%s'!", i, args[i]);
+        }
+    }
+
+    @Override
+    public static String cry() {
+        return Bubungus.class.simpleName();
+    }
+
+    @Override
+    public Set<Bubungus> infest(Corpse corpse) {
+        Corpse.infest((Fungus) this);
+
+        return new HashSet<Bubungus>() {{
+            add(new Bubungus());
+            add(new Bubungus());
+        }}
+    }
+
+}

@@ -9,29 +9,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.*;
 import cooldomainname.com.thebesttexteditorever.BetterFile;
 import cooldomainname.com.thebesttexteditorever.BetterSpinner;
+import cooldomainname.com.thebesttexteditorever.R;
+import cooldomainname.com.thebesttexteditorever.TextBuffer;
 import cooldomainname.com.thebesttexteditorever.dialogfragments.OpenFileDialogFragment;
 import cooldomainname.com.thebesttexteditorever.dialogfragments.OpenFileDialogFragment.OpenFileDialogListener;
 import cooldomainname.com.thebesttexteditorever.dialogfragments.SaveFileDialogFragment;
 import cooldomainname.com.thebesttexteditorever.dialogfragments.SaveFileDialogFragment.SaveFileDialogListener;
-import cooldomainname.com.thebesttexteditorever.R;
+import cooldomainname.com.thebesttexteditorever.syntaxhighlighting.LanguageIdentifier;
 import cooldomainname.com.thebesttexteditorever.syntaxhighlighting.TextWatchers.TextWatcherJava;
 import cooldomainname.com.thebesttexteditorever.syntaxhighlighting.TextWatchers.TextWatcherPorkdown;
-import cooldomainname.com.thebesttexteditorever.TextBuffer;
 
 import java.io.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import static cooldomainname.com.thebesttexteditorever.Library.toastLong;
 import static cooldomainname.com.thebesttexteditorever.activities.ActivityDownloadFile.BUNDLE_KEY_FILE_URI;
 import static cooldomainname.com.thebesttexteditorever.activities.ActivityEditText.RequestCode.OPEN_URL;
-import static cooldomainname.com.thebesttexteditorever.Library.toastLong;
 
 public class ActivityEditText extends AppCompatActivity implements OpenFileDialogListener, SaveFileDialogListener {
 
@@ -296,13 +294,27 @@ public class ActivityEditText extends AppCompatActivity implements OpenFileDialo
             editText.setText("");
 
             // Set up syntax highlighting, if we can.
-            String extension = file.extension();
+            String extension = file.extension(); //TODO make Language object with Set<String> knownExtensions, etc.
 
             // If we know how to highlight this file,
             if (extensionTextWatcherMap.containsKey(extension)) {
                 // Try to do it!
-                toastLong(String.format("'%s' language detected!", extension), getApplicationContext());
+                toastLong(String.format("'%s' language detected from extension '%s'!", extension, extension), getApplicationContext());
                 setupSyntaxHighlighter(extension, editText, extensionTextWatcherMap);
+            } else { //We don't know by its extension, so...
+
+                //Try to identify it by its contents!
+                String detectedExtension = LanguageIdentifier.Companion.identify(textBuffer.toString());
+
+                // If it worked,
+                if (detectedExtension != null &&
+                        extensionTextWatcherMap.containsKey(detectedExtension)) {
+
+                    toastLong(String.format("'%s' language detected from language auto-detection!", extension), getApplicationContext());
+
+                    // Setup syntax highlighting that way!
+                    setupSyntaxHighlighter(extension, editText, extensionTextWatcherMap);
+                }
             }
 
             // Populate our EditText with its contents.

@@ -162,6 +162,10 @@ public class TextBuffer {
         return this.lines.get(location);
     }
 
+    /***
+     * @return The entirety of this {@link TextBuffer} as a string.
+     * Delimiters will be inserted as they are, and won't necessarily be '\n' or "\r\n".
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
