@@ -1,4 +1,4 @@
-package cooldomainname.com.the_best_text_editor_ever.Activities
+package cooldomainname.com.thebesttexteditorever.Activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,9 +7,9 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
-import cooldomainname.com.the_best_text_editor_ever.BetterFile
-import cooldomainname.com.the_best_text_editor_ever.Library.*
-import cooldomainname.com.the_best_text_editor_ever.R
+import cooldomainname.com.thebesttexteditorever.BetterFile
+import cooldomainname.com.thebesttexteditorever.Library.*
+import cooldomainname.com.thebesttexteditorever.R
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL

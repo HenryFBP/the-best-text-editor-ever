@@ -1,4 +1,4 @@
-package cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.TextWatchers;
+package cooldomainname.com.thebesttexteditorever.SyntaxHighlighting.TextWatchers;
 
 import android.graphics.Color;
 import android.text.Editable;

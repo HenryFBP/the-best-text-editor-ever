@@ -1,4 +1,4 @@
-package cooldomainname.com.the_best_text_editor_ever
+package cooldomainname.com.thebesttexteditorever
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

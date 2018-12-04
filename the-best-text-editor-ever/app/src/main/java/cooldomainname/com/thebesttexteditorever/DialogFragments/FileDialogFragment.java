@@ -1,4 +1,4 @@
-package cooldomainname.com.the_best_text_editor_ever.DialogFragments;
+package cooldomainname.com.thebesttexteditorever.DialogFragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.*;
-import cooldomainname.com.the_best_text_editor_ever.R;
+import cooldomainname.com.thebesttexteditorever.R;
 
 import java.io.File;
 import java.util.ArrayList;

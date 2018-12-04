@@ -7,7 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "cooldomainname.com.the_best_text_editor_ever"
+        applicationId "cooldomainname.com.thebesttexteditorever"
         minSdkVersion 14
         targetSdkVersion 28
         versionCode 1

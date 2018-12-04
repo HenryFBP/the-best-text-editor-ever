@@ -1,4 +1,4 @@
-package cooldomainname.com.the_best_text_editor_ever.Activities;
+package cooldomainname.com.thebesttexteditorever.Activities;
 
 
 import android.content.Intent;
@@ -13,25 +13,25 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
-import cooldomainname.com.the_best_text_editor_ever.BetterFile;
-import cooldomainname.com.the_best_text_editor_ever.BetterSpinner;
-import cooldomainname.com.the_best_text_editor_ever.DialogFragments.OpenFileDialogFragment;
-import cooldomainname.com.the_best_text_editor_ever.DialogFragments.OpenFileDialogFragment.OpenFileDialogListener;
-import cooldomainname.com.the_best_text_editor_ever.DialogFragments.SaveFileDialogFragment;
-import cooldomainname.com.the_best_text_editor_ever.DialogFragments.SaveFileDialogFragment.SaveFileDialogListener;
-import cooldomainname.com.the_best_text_editor_ever.R;
-import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.TextWatchers.TextWatcherJava;
-import cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting.TextWatchers.TextWatcherPorkdown;
-import cooldomainname.com.the_best_text_editor_ever.TextBuffer;
+import cooldomainname.com.thebesttexteditorever.BetterFile;
+import cooldomainname.com.thebesttexteditorever.BetterSpinner;
+import cooldomainname.com.thebesttexteditorever.DialogFragments.OpenFileDialogFragment;
+import cooldomainname.com.thebesttexteditorever.DialogFragments.OpenFileDialogFragment.OpenFileDialogListener;
+import cooldomainname.com.thebesttexteditorever.DialogFragments.SaveFileDialogFragment;
+import cooldomainname.com.thebesttexteditorever.DialogFragments.SaveFileDialogFragment.SaveFileDialogListener;
+import cooldomainname.com.thebesttexteditorever.R;
+import cooldomainname.com.thebesttexteditorever.SyntaxHighlighting.TextWatchers.TextWatcherJava;
+import cooldomainname.com.thebesttexteditorever.SyntaxHighlighting.TextWatchers.TextWatcherPorkdown;
+import cooldomainname.com.thebesttexteditorever.TextBuffer;
 
 import java.io.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import static cooldomainname.com.the_best_text_editor_ever.Activities.ActivityDownloadFile.BUNDLE_KEY_FILE_URI;
-import static cooldomainname.com.the_best_text_editor_ever.Activities.ActivityEditText.RequestCode.OPEN_URL;
-import static cooldomainname.com.the_best_text_editor_ever.Library.toastLong;
+import static cooldomainname.com.thebesttexteditorever.Activities.ActivityDownloadFile.BUNDLE_KEY_FILE_URI;
+import static cooldomainname.com.thebesttexteditorever.Activities.ActivityEditText.RequestCode.OPEN_URL;
+import static cooldomainname.com.thebesttexteditorever.Library.toastLong;
 
 public class ActivityEditText extends AppCompatActivity implements OpenFileDialogListener, SaveFileDialogListener {
 

@@ -1,4 +1,4 @@
-package cooldomainname.com.the_best_text_editor_ever
+package cooldomainname.com.thebesttexteditorever
 
 import android.support.annotation.NonNull
 import org.jetbrains.annotations.Nullable

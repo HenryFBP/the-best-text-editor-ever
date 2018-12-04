@@ -1,6 +1,4 @@
-package cooldomainname.com.the_best_text_editor_ever.SyntaxHighlighting;
-
-import android.graphics.Color;
+package cooldomainname.com.thebesttexteditorever.SyntaxHighlighting;
 
 public class SyntaxElement {
 
