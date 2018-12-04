@@ -1,4 +1,4 @@
-package cooldomainname.com.thebesttexteditorever.Activities;
+package cooldomainname.com.thebesttexteditorever.activities;
 
 
 import android.content.Intent;
@@ -15,13 +15,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 import cooldomainname.com.thebesttexteditorever.BetterFile;
 import cooldomainname.com.thebesttexteditorever.BetterSpinner;
-import cooldomainname.com.thebesttexteditorever.DialogFragments.OpenFileDialogFragment;
-import cooldomainname.com.thebesttexteditorever.DialogFragments.OpenFileDialogFragment.OpenFileDialogListener;
-import cooldomainname.com.thebesttexteditorever.DialogFragments.SaveFileDialogFragment;
-import cooldomainname.com.thebesttexteditorever.DialogFragments.SaveFileDialogFragment.SaveFileDialogListener;
+import cooldomainname.com.thebesttexteditorever.dialogfragments.OpenFileDialogFragment;
+import cooldomainname.com.thebesttexteditorever.dialogfragments.OpenFileDialogFragment.OpenFileDialogListener;
+import cooldomainname.com.thebesttexteditorever.dialogfragments.SaveFileDialogFragment;
+import cooldomainname.com.thebesttexteditorever.dialogfragments.SaveFileDialogFragment.SaveFileDialogListener;
 import cooldomainname.com.thebesttexteditorever.R;
-import cooldomainname.com.thebesttexteditorever.SyntaxHighlighting.TextWatchers.TextWatcherJava;
-import cooldomainname.com.thebesttexteditorever.SyntaxHighlighting.TextWatchers.TextWatcherPorkdown;
+import cooldomainname.com.thebesttexteditorever.syntaxhighlighting.TextWatchers.TextWatcherJava;
+import cooldomainname.com.thebesttexteditorever.syntaxhighlighting.TextWatchers.TextWatcherPorkdown;
 import cooldomainname.com.thebesttexteditorever.TextBuffer;
 
 import java.io.*;
@@ -29,8 +29,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import static cooldomainname.com.thebesttexteditorever.Activities.ActivityDownloadFile.BUNDLE_KEY_FILE_URI;
-import static cooldomainname.com.thebesttexteditorever.Activities.ActivityEditText.RequestCode.OPEN_URL;
+import static cooldomainname.com.thebesttexteditorever.activities.ActivityDownloadFile.BUNDLE_KEY_FILE_URI;
+import static cooldomainname.com.thebesttexteditorever.activities.ActivityEditText.RequestCode.OPEN_URL;
 import static cooldomainname.com.thebesttexteditorever.Library.toastLong;
 
 public class ActivityEditText extends AppCompatActivity implements OpenFileDialogListener, SaveFileDialogListener {
@@ -177,7 +177,7 @@ public class ActivityEditText extends AppCompatActivity implements OpenFileDialo
                             break;
                         }
 
-                        case "run tests": {
+                        case "run tests": { // TODO make MORE TESTS!!!
                             testEditTextFileSaving();
                             toastLong("Tests worked. Woo!", getApplicationContext());
                         }

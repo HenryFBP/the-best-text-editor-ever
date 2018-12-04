@@ -1,11 +1,11 @@
-package cooldomainname.com.thebesttexteditorever.SyntaxHighlighting.TextWatchers;
+package cooldomainname.com.thebesttexteditorever.syntaxhighlighting.TextWatchers;
 
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.TextWatcher;
 import android.text.style.BackgroundColorSpan;
-import cooldomainname.com.thebesttexteditorever.SyntaxHighlighting.SEUtils;
-import cooldomainname.com.thebesttexteditorever.SyntaxHighlighting.SyntaxElement;
+import cooldomainname.com.thebesttexteditorever.syntaxhighlighting.SEUtils;
+import cooldomainname.com.thebesttexteditorever.syntaxhighlighting.SyntaxElement;
 
 public class TextWatcherJava implements TextWatcher {
 

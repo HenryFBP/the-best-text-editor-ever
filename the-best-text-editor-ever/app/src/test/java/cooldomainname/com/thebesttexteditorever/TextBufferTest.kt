@@ -12,7 +12,7 @@ import java.io.FileWriter
 class TextBufferTest : TestCase() {
 
 
-    var folder = TemporaryFolder()
+    private var folder = TemporaryFolder()
 
     override fun setUp() {
         folder.create()
@@ -44,13 +44,13 @@ class TextBufferTest : TestCase() {
      */
     @Test
     fun testTextBufferSavingFile() {
-        var textBuffer = TextBuffer("I got some data!", "As do I!")
+        val textBuffer = TextBuffer("I got some data!", "As do I!")
 
-        var file = folder.newFile("tempFile.txt")
+        val file = folder.newFile("tempFile.txt")
 
         textBuffer.saveTo(file)
 
-        var reader = BufferedReader(FileReader(file))
+        val reader = BufferedReader(FileReader(file))
 
         Assert.assertEquals('I'.toInt(), reader.read())
         Assert.assertEquals(" got some data!", reader.readLine())
@@ -67,13 +67,13 @@ class TextBufferTest : TestCase() {
      */
     @Test
     fun testTextBufferSavingFileWackyDelims() {
-        var textBuffer = TextBuffer("I like wacky delims.", "So do I!").setDelimiter(" :) ")
+        val textBuffer = TextBuffer("I like wacky delims.", "So do I!").setDelimiter(" :) ")
 
-        var file = folder.newFile("tempFile.txt")
+        val file = folder.newFile("tempFile.txt")
 
         textBuffer.saveTo(file)
 
-        var reader = BufferedReader(FileReader(file))
+        val reader = BufferedReader(FileReader(file))
 
         Assert.assertEquals("I like wacky delims. :) So do I!", reader.readLine())
 
@@ -90,21 +90,21 @@ class TextBufferTest : TestCase() {
     @Test
     fun testTextBufferReadingFile() {
 
-        var funDelims = listOf<CharSequence>("x", "\n", "\r\n", "\r", "ASDF")
+        val funDelims = listOf<CharSequence>("x", "\n", "\r\n", "\r", "ASDF")
 
         for (i in 0 until funDelims.size) {
 
-            var delim = funDelims[i]
+            val delim = funDelims[i]
 
-            var file = folder.newFile("tempFile-${i}.txt")
+            val file = folder.newFile("tempFile-$i.txt")
 
-            var writer = BufferedWriter(FileWriter(file))
+            val writer = BufferedWriter(FileWriter(file))
 
             writer.write("Hello!\nI like edge cases!\nDon't you?\n\n...Well?\n".replace("\n", delim.toString()))
 
             writer.close()
 
-            var textBuffer: TextBuffer = TextBuffer.fromFile(file, delim)
+            val textBuffer: TextBuffer = TextBuffer.fromFile(file, delim)
 
             assertEquals("Hello!", textBuffer.getLine(0))
             assertEquals("I like edge cases!", textBuffer.getLine(1))

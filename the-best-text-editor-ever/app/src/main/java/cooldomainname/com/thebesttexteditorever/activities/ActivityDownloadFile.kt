@@ -1,4 +1,4 @@
-package cooldomainname.com.thebesttexteditorever.Activities
+package cooldomainname.com.thebesttexteditorever.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -116,7 +116,7 @@ class ActivityDownloadFile : AppCompatActivity() {
 
                     // Return back to the parent activity our downloaded file's URL.
                     val intent = Intent()
-                    intent.putExtra(BUNDLE_KEY_FILE_URI, outputFile.absolutePath);
+                    intent.putExtra(BUNDLE_KEY_FILE_URI, outputFile.absolutePath)
                     setResult(RESULT_OK, intent)
 
                     finish()

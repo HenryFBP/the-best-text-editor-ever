@@ -1,4 +1,4 @@
-package cooldomainname.com.thebesttexteditorever.SyntaxHighlighting;
+package cooldomainname.com.thebesttexteditorever.syntaxhighlighting;
 
 public class SyntaxElement {
 

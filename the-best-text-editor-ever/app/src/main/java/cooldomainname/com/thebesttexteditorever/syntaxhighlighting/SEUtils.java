@@ -1,4 +1,4 @@
-package cooldomainname.com.thebesttexteditorever.SyntaxHighlighting;
+package cooldomainname.com.thebesttexteditorever.syntaxhighlighting;
 
 import android.graphics.Color;
 
@@ -33,7 +33,7 @@ public class SEUtils {
      * Apply a single color to many keywords to produce a list of {@link SyntaxElement}s.
      * @param color The color all keywords should be.
      * @param keywords The list of keywords.
-     * @return
+     * @return A list of {@link SyntaxElement}s that all have a color of `color`.
      */
     public static List<SyntaxElement> applyColor(Integer color, String... keywords) {
         List<SyntaxElement> ret = new ArrayList<>();
